@@ -1,0 +1,197 @@
+<!doctype hmtl>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/prism.css">
+<script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+<style>
+
+      
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1> Medical Encounters Use Case </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <section>
+                    <h2>Description</h2>
+                    <p>
+                       Students are required to meet certain medical encounters during their training. 
+                       This is logged electronically and evaluated at the end of the students' training. 
+                       If a student does not have a certain encounter by the end of the training a simulated 
+                       version of the encounter must be experienced, such as through computer cases, simulations, 
+                       readings, etc. All of these encounters need to be recorded in such a way to support reporting 
+                       of the encounters, whether the encounter was live or some alternative, and the total percentage 
+                       of alternative encounters. 
+                    </p>
+                </section>
+            </div>
+            <div class="col-md-12">
+                <section>
+                    <h2>Requirements</h2>
+                    <p>
+                       The following minimal requirements must be met:
+                    </p>
+                   <ul>
+                       <li>A student can electronicall log their encounters, both live and simulated</li>
+                       <li>A report can display the student's encounters</li>
+                       <li>A report can indicate if the encounter was live or simulated</li>
+                       <li>A report can show the percentage of students that experienced the simulated encounter</li>
+                       <li>A report can show the type of encounter, if the encounter was simulated</li>
+                   </ul>
+                </section>
+            </div>
+            <div class="col-md-12">
+                <section>
+                    <h2>Potential Solution</h2>
+                    <p> 
+                        The <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md">Experience API (xAPI)</a> offers a solution by 
+                        storing the encounter data as xAPI Statements, and providing a way to retrieve that data. Encoding the data for later reports 
+                        is the largest consideration in the formatting of the encounters. The following breaks down the statement.
+                    </p>
+                    <h3>Storage (Encoding) of the Encounters</h3>
+                    
+                    <h4>Actor</h4>
+                    <p>
+                        The actor portion of the Statement uniquely identifies the student. The "account" attribute was 
+                        used for this demonstration to remove any personally identifiable information, since the account "name" 
+                        attribute can be anything, such as some identification number.
+                    </p>
+                    <pre><code class="language-javascript">
+"actor": {
+    "name": "jono",
+    "account": {
+        "homePage": "http://adlnet.gov/demo/accounts/encounter",
+        "name": "ABC123"
+    }
+}
+                    </code></pre>
+                    
+                    <h4>Verb</h4>
+                    <p>
+                        The verb of the Statement identifies the action taking place. Since all of the tracking was related 
+                        to 'encounters', the verb 'encountered' was coined for use in this example.
+                    </p>
+                    <pre><code class="language-javascript">
+"verb": {
+    "id": "http://adlnet.gov/demo/verb/medical/encountered",
+    "display": {
+        "en-US": "encountered"
+    }
+}
+                    </code></pre>
+                    <h4>Object</h4>
+                    <p>
+                        The object identifies the encounter, such as patient with chest pain. 
+                        The type attribute is used to indicate the type of encounter, ie. was 
+                        it live, if not, what type of simulation was it?
+                    </p>
+                    <pre><code class="language-javascript">
+"object": {
+    "id": "http://adlnet.gov/demo/encounter/chest-pain",
+    "definition": {
+        "name": {
+            "en-US": "patient with chest pain"
+        },
+        "type": "http://adlnet.gov/demo/encounter/type/alternate/reading"
+    }
+}
+                    </code></pre>
+
+                    <h4>Context</h4>
+                    <p>
+                        The context object used in this scenario is mainly for 
+                        searchability. Using the category activities as 
+                        <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#details-15">'tags'</a> 
+                        allows the reporting system to 
+                        query a subset of statements in the LRS. For example, the IRI 
+                        "http://adlnet.gov/demo/profile/medical-encounter" allows the report 
+                        to retrieve only the Statements that follow this data format. And 
+                        the IRI "http://adlnet.gov/demo/encounter/type/alternate" allows 
+                        the report to query the LRS for only alternate encounters.
+                    </p>
+                    <pre><code class="language-javascript">
+"context": {
+    "contextActivities": {
+        "category": [
+            {
+                "id": "http://adlnet.gov/demo/encounter/type/alternate"
+            },
+            {
+                "id": "http://adlnet.gov/demo/profile/medical-encounter"
+            },
+            {
+                "id": "http://adlnet.gov/demo/encounter/type/alternate/reading"
+            }
+        ]
+    }
+}
+                    </code></pre>
+
+                    <h4>Full Statement Example</h4>
+                    <p>
+                        A complete Statement is shown below.
+                    </p>
+                    <pre><code class="language-javascript">
+{
+    "actor": {
+        "name": "jono",
+        "account": {
+            "homePage": "http://adlnet.gov/demo/accounts/encounter",
+            "name": "ABC123"
+        }
+    },
+    "verb": {
+        "id": "http://adlnet.gov/demo/verb/medical/encountered",
+        "display": {
+            "en-US": "encountered"
+        }
+    },
+    "object": {
+        "id": "http://adlnet.gov/demo/encounter/chest-pain",
+        "definition": {
+            "name": {
+                "en-US": "patient with chest pain"
+            },
+            "type": "http://adlnet.gov/demo/encounter/type/alternate/reading"
+        }
+    },
+    "context": {
+        "contextActivities": {
+            "category": [
+                {
+                    "id": "http://adlnet.gov/demo/encounter/type/alternate"
+                },
+                {
+                    "id": "http://adlnet.gov/demo/profile/medical-encounter"
+                },
+                {
+                    "id": "http://adlnet.gov/demo/encounter/type/alternate/reading"
+                }
+            ]
+        }
+    },
+    "timestamp": "2015-04-17T15:37:27.752Z"
+}
+                    </code></pre>
+                </section>
+            </div>
+            <div class="col-md-12">
+                <h2>Live Examples</h2>
+                <p>
+                    Live examples are hosted for demonstration purposes.
+                    <br><br>
+                    <a href="encounters.html">The encounter app</a>
+                    <br><br>
+                    <a href="reporting.html">The reporting app</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="js/prism.js" type="text/javascript"></script>
+</body>
+</html>

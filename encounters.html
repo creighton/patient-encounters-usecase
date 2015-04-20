@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/xapiwrapper.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    ADL.XAPIWrapper.changeConfig({"endpoint":"https://lrs.adlnet.gov/xapi/", "user":"tom", "password":"1234"});    
+</script>
+<style>
+    .breakouts {
+        padding: 20px 0;
+        text-align: center;
+    }
+    .breakouts > div {
+        margin: 20px;
+        border: 1px solid #DDD;
+        border-spacing: 3px;
+        -webkit-box-shadow: 5px 5px 20px #AAA;
+           -moz-box-shadow: 5px 5px 20px #AAA;
+                box-shadow: 5px 5px 20px #AAA;
+
+    }
+    .breakouts > div > div {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: 0.2s;
+    }
+    .breakouts > div > div > a {
+        margin: 0 10 0 10;
+    }
+      
+</style>
+</head>
+<body>
+    <div class="container">
+       <nav class="navbar navbar-default">
+           <div class="container-fluid">
+               <div class="collapse navbar-collapse">
+                  <p id="userinfo" class="navbar-text navbar-right">Signed in as <a href="#" id="changeuserinfo" class="navbar-link"></a></p>
+                   <form id="userform" class="navbar-form navbar-right" role="login">
+                       <div class="form-group">
+                           <input type="text" name="username" id="formusername" class="form-control" placeholder="name">
+                           <input type="text" name="userid" id="formuserid" class="form-control" placeholder="userid">
+                       </div>
+                       <button type="submit" id="userformsubmit" class="btn btn-default">Submit</button>
+                   </form>
+               </div>
+           </div>
+       </nav>
+        <div class="page-header">
+            <h1> Requisite Encounters </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    This is an example student encounter app. The student can log in and report their encounters. When a 
+                    button is clicked for an encounter the page creates an xAPI Statement and sends it to the ADL LRS 
+                    (configurable). See <a href="http://adlnet.github.io/xapi-statement-viewer/">the Statement Viewer </a>
+                    for a view of the Statements in the ADL LRS.
+                </p>
+            </div>
+        </div>
+        <div class="row breakouts">
+            <div class="col-md-4">
+                <div>
+                    <img src="img/chestpain.jpeg" alt="Chest Pain" class="img-circle img-thumbnail">
+                    <h2>Chest Pain</h2>
+                    <p>Encountered a patient complaining of chest pains.</p>
+                    <a href="#" data-condition-type="live" data-condition-id="0" class="btn btn-primary" title="Live Encounter">Live Encounter »</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Alternate Experience <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-condition-type="alt" data-condition-id="0" data-condition-val="simulation" href="#">Simulation</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="0" data-condition-val="cases" href="#">Computer Cases</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="0" data-condition-val="reading" href="#">Reading</a></li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-success fade in out" id="alert0" style="margin-top: 15px">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        Your encounter has been recorded.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <img src="img/migraine.jpeg" alt="Migraine" class="img-circle img-thumbnail">
+                    <h2>Migraine</h2>
+                    <p>Encountered a patient complaining of a migraine.</p>
+                    <a href="#" data-condition-type="live" data-condition-id="1" class="btn btn-primary" title="Live Encounter">Live Encounter »</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Alternate Experience <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-condition-type="alt" data-condition-id="1" data-condition-val="simulation" href="#">Simulation</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="1" data-condition-val="cases" href="#">Computer Cases</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="1" data-condition-val="reading" href="#">Reading</a></li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-success fade in out" id="alert1" style="margin-top: 15px">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        Your encounter has been recorded.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <img src="img/brokenarm.jpeg" alt="Broken Arm" class="img-circle img-thumbnail">
+                    <h2>Broken Arm</h2>
+                    <p>Encountered a patient with a broken arm.</p>
+                    <a href="#" data-condition-type="live" data-condition-id="2" class="btn btn-primary" title="Live Encounter">Live Encounter »</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Alternate Experience <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-condition-type="alt" data-condition-id="2" data-condition-val="simulation" href="#">Simulation</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="2" data-condition-val="cases" href="#">Computer Cases</a></li>
+                            <li><a data-condition-type="alt" data-condition-id="2" data-condition-val="reading" href="#">Reading</a></li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-success fade in out" id="alert2" style="margin-top: 15px">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        Your encounter has been recorded.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var learnername = "anon",
+            learnerid = "anonymous",
+            homepage = "http://adlnet.gov/demo/accounts/encounter",
+            profile = {"id" : "http://adlnet.gov/demo/profile/medical-encounter"},
+            encountered = {"id":"http://adlnet.gov/demo/verb/medical/encountered",
+                           "display":{"en-US":"encountered"}},
+            conditions = [
+                {"id":"http://adlnet.gov/demo/encounter/chest-pain",
+                 "definition":{"name":{"en-US":"patient with chest pain"}}},
+                {"id":"http://adlnet.gov/demo/encounter/migraine",
+                 "definition":{"name":{"en-US":"patient with migraine"}}},
+                {"id":"http://adlnet.gov/demo/encounter/fracture/ulna",
+                 "definition":{"name":{"en-US":"patient with broken arm"}}}
+            ],
+            types = {
+                "live": {"id":"http://adlnet.gov/demo/encounter/type/live"},
+                "alt": {"id":"http://adlnet.gov/demo/encounter/type/alternate"},
+            },
+            alts = {
+                "simulation": {"id":"http://adlnet.gov/demo/encounter/type/alternate/simulation"},
+                "cases": {"id":"http://adlnet.gov/demo/encounter/type/alternate/computer-cases"},
+                "reading": {"id":"http://adlnet.gov/demo/encounter/type/alternate/reading"}
+            }
+            ;
+        
+        $(document).ready(function() {
+            $("#userform").submit(processUserForm);
+            $("#changeuserinfo").click(processChangeUser);
+            $("#userinfo").hide();
+            $(".breakouts div div a").click(encounterClick);
+            $(".alert").hide();
+        });
+        
+        /* deal with form locally */
+        function processUserForm(e) {
+            if (e.preventDefault) e.preventDefault();
+            learnername = $("#formusername").val();
+            learnerid = $("#formuserid").val();
+            toggleUserForm();
+            $("#changeuserinfo").text(learnername + " (" + learnerid + ")");
+            return false;
+        }
+        
+        function processChangeUser(e) {
+            if (e.preventDefault) e.preventDefault();
+            toggleUserForm();
+            $(".alert").hide();
+            return false;
+        }
+
+        function toggleUserForm() {
+            $("#userform").toggle();
+            $("#userinfo").toggle();
+        }
+        
+        function encounterClick(e) {
+            if (e.preventDefault) e.preventDefault();
+            var condtype = e.target.dataset.conditionType;
+            var stmt = getBaseStmt();
+            var type = types[condtype];
+            var obj = conditions[e.target.dataset.conditionId];
+            obj.definition.type = type.id;
+            stmt.object = obj;
+            stmt.context.contextActivities.category.push(type);
+            stmt.context.contextActivities.category.push(profile);
+            if (condtype === "alt") {
+                stmt.context.contextActivities.category.push(alts[e.target.dataset.conditionVal]);
+                obj.definition.type = alts[e.target.dataset.conditionVal].id;
+            }
+            ADL.XAPIWrapper.sendStatement(stmt, function(r,o) { $("#alert" + e.target.dataset.conditionId).show()});
+        }
+        
+        function getBaseStmt() {
+            return {
+                "actor": {
+                    "name": learnername,
+                    "account": {
+                        "homePage": homepage, 
+                        "name": learnerid
+                    }
+                },
+                "verb": encountered,
+                "object": {},
+                "context": {"contextActivities":{"category":[]}},
+                "timestamp": (new Date()).toISOString()
+            };
+        }
+    </script>
+</body>
+</html>
